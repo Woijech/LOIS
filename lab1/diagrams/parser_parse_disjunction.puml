@@ -1,0 +1,14 @@
+@startuml
+start
+
+:expression = self._parse_conjunction();
+
+while (self._match(TokenType.OR)?) is (да)
+  :operator = self._previous();
+  :right = self._parse_conjunction();
+  :expression = BinaryExpression(operator.value, expression, right);
+endwhile (нет)
+
+:return expression;
+stop
+@enduml

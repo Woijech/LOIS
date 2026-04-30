@@ -1,0 +1,21 @@
+@startuml
+skinparam conditionEndStyle hline
+start
+
+:literals = _collect_disjunction_terms(node);
+:variables = set();
+
+while (есть следующий literal?) is (да)
+  :variable_name = _literal_variable_name(literal);
+
+  if (variable_name is None\nor variable_name in variables?) then (да)
+    :return None;
+    stop
+  else (нет)
+    :variables.add(variable_name);
+  endif
+endwhile (нет)
+
+:return variables;
+stop
+@enduml

@@ -1,0 +1,15 @@
+@startuml
+skinparam conditionEndStyle hline
+start
+
+:expression = self._parse_equivalence();
+:current = self._current();
+
+if (current.token_type != TokenType.EOF?) then (да)
+  :raise self._unexpected_after_expression(current);
+  stop
+else (нет)
+  :return expression;
+  stop
+endif
+@enduml

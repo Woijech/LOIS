@@ -1,0 +1,22 @@
+@startuml
+skinparam conditionEndStyle hline
+start
+
+if (isinstance(node, Identifier)?) then (да)
+  :return node.name;
+  stop
+else (нет)
+  if (isinstance(node, UnaryExpression)\nand node.operator == "!"?) then (да)
+    if (isinstance(node.operand, Identifier)?) then (да)
+      :return node.operand.name;
+      stop
+    else (нет)
+      :return None;
+      stop
+    endif
+  else (нет)
+    :return None;
+    stop
+  endif
+endif
+@enduml

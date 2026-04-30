@@ -1,0 +1,5 @@
+@startuml
+start
+:return self._tokens[self._index - 1];
+stop
+@enduml

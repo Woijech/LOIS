@@ -1,0 +1,20 @@
+@startuml
+skinparam conditionEndStyle hline
+start
+
+:raw = "->";
+while (есть следующий raw?) is (да)
+  if (self._text.startswith(raw, self._position)?) then (да)
+    :token_type, value = _OPERATORS[raw];
+    :token = Token(token_type, value, self._position);
+    :self._position += len(raw);
+    :return token;
+    stop
+  else (нет)
+    :взять следующий raw;
+  endif
+endwhile (нет)
+
+:return None;
+stop
+@enduml

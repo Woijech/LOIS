@@ -1,0 +1,96 @@
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+skinparam classAttributeIconSize 0
+hide circle
+
+class FormulaError
+
+class LexerError
+
+class ParserError
+
+class TokenType {
+  IDENTIFIER
+  NOT
+  AND
+  OR
+  IMPLIES
+  EQUIV
+  LPAREN
+  RPAREN
+  EOF
+}
+
+class Token {
+  +token_type: TokenType
+  +value: str
+  +position: int
+}
+
+class Lexer {
+  -_text: str
+  -_length: int
+  -_position: int
+  +tokenize(): list[Token]
+  -_read_operator(): Token | None
+  -_read_identifier(): Token
+}
+
+abstract class Expression
+
+class Identifier {
+  +name: str
+}
+
+class UnaryExpression {
+  +operator: str
+  +operand: Expression
+}
+
+class BinaryExpression {
+  +operator: str
+  +left: Expression
+  +right: Expression
+}
+
+class Parser {
+  -_tokens: list[Token]
+  -_index: int
+  +parse(): Expression
+  -_parse_equivalence(): Expression
+  -_parse_implication(): Expression
+  -_parse_disjunction(): Expression
+  -_parse_conjunction(): Expression
+  -_parse_unary(): Expression
+  -_parse_primary(): Expression
+  -_unexpected_after_expression(token: Token): ParserError
+  -_match(token_type: TokenType): bool
+  -_current(): Token
+  -_previous(): Token
+}
+
+FormulaError --|> ValueError
+LexerError --|> FormulaError
+ParserError --|> FormulaError
+
+Identifier --|> Expression
+UnaryExpression --|> Expression
+BinaryExpression --|> Expression
+
+Token --> TokenType
+Lexer --> Token : создает
+Lexer ..> LexerError : выбрасывает
+
+Parser --> Lexer : использует
+Parser --> Token : использует
+Parser --> TokenType : использует
+Parser ..> ParserError : выбрасывает
+Parser ..> Identifier : создает
+Parser ..> UnaryExpression : создает
+Parser ..> BinaryExpression : создает
+
+UnaryExpression --> Expression
+BinaryExpression --> Expression
+
+@enduml

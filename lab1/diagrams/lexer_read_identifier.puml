@@ -1,0 +1,18 @@
+@startuml
+skinparam conditionEndStyle hline
+start
+
+:start = self._position;
+:self._position += 1;
+
+while (self._position < self._length?) is (да)
+  :current = self._text[self._position];
+
+  if (current.isalnum() or current == "_"?) then (да)
+    :self._position += 1;
+  endif
+endwhile (нет)
+
+:return Token(TokenType.IDENTIFIER,\nself._text[start:self._position], start);
+stop
+@enduml

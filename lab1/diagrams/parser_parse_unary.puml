@@ -1,0 +1,20 @@
+@startuml
+skinparam conditionEndStyle hline
+start
+
+if (self._match(TokenType.NOT)?) then (да)
+  :operator = self._previous();
+  :upcoming = self._current();
+
+  if (upcoming.token_type in _BINARY_TOKENS\nor upcoming.token_type == TokenType.RPAREN\nor upcoming.token_type == TokenType.EOF?) then (да)
+    :raise ParserError("Унарный оператор '!' ...");
+    stop
+  else (нет)
+    :return UnaryExpression(operator.value, self._parse_unary());
+    stop
+  endif
+else (нет)
+  :return self._parse_primary();
+  stop
+endif
+@enduml

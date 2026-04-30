@@ -1,0 +1,16 @@
+@startuml
+skinparam conditionEndStyle hline
+start
+
+:expression = self._parse_disjunction();
+
+if (self._match(TokenType.IMPLIES)?) then (да)
+  :operator = self._previous();
+  :right = self._parse_implication();
+  :return BinaryExpression(operator.value, expression, right);
+  stop
+else (нет)
+  :return expression;
+  stop
+endif
+@enduml

@@ -1,0 +1,28 @@
+@startuml
+skinparam conditionEndStyle hline
+start
+
+:clauses = _collect_conjunction_terms(node);
+
+if (not clauses?) then (да)
+  :return False;
+  stop
+else (нет)
+  :clause_variable_sets = [];
+endif
+
+while (есть следующий clause?) is (да)
+  :variables = _extract_clause_variables(clause);
+
+  if (variables is None?) then (да)
+    :return False;
+    stop
+  else (нет)
+    :clause_variable_sets.append(frozenset(variables));
+  endif
+endwhile (нет)
+
+:reference_variables = clause_variable_sets[0];
+:return all(variables == reference_variables\nfor variables in clause_variable_sets);
+stop
+@enduml

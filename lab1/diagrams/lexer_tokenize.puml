@@ -1,0 +1,36 @@
+@startuml
+skinparam conditionEndStyle hline
+start
+
+if (not self._text.strip()?) then (да)
+  :raise LexerError("Пустая строка...");
+  stop
+else (нет)
+  :tokens = [];
+endif
+
+while (self._position < self._length?) is (да)
+  :current = self._text[self._position];
+
+  if (current.isspace()?) then (да)
+    :self._position += 1;
+  else (нет)
+    :operator_token = self._read_operator();
+
+    if (operator_token is not None?) then (да)
+      :tokens.append(operator_token);
+    else (нет)
+      if (current.isalpha()?) then (да)
+        :tokens.append(self._read_identifier());
+      else (нет)
+        :raise LexerError("Недопустимый символ ...");
+        stop
+      endif
+    endif
+  endif
+endwhile (нет)
+
+:tokens.append(Token(TokenType.EOF, "", self._length));
+:return tokens;
+stop
+@enduml

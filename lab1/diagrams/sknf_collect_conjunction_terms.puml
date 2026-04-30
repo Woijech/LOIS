@@ -1,0 +1,12 @@
+@startuml
+skinparam conditionEndStyle hline
+start
+
+if (isinstance(node, BinaryExpression)\nand node.operator == "/\\"?) then (да)
+  :return _collect_conjunction_terms(node.left)\n+ _collect_conjunction_terms(node.right);
+  stop
+else (нет)
+  :return [node];
+  stop
+endif
+@enduml

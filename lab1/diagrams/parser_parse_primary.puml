@@ -1,0 +1,42 @@
+@startuml
+skinparam conditionEndStyle hline
+start
+
+:current = self._current();
+
+if (self._match(TokenType.IDENTIFIER)?) then (да)
+  :return Identifier(self._previous().value);
+  stop
+else (нет)
+  if (self._match(TokenType.LPAREN)?) then (да)
+    :opening = self._previous();
+    :expression = self._parse_equivalence();
+
+    if (self._match(TokenType.RPAREN)?) then (да)
+      :return expression;
+      stop
+    else (нет)
+      :raise ParserError("Не найдена закрывающая скобка...");
+      stop
+    endif
+  else (нет)
+    if (current.token_type == TokenType.RPAREN?) then (да)
+      :raise ParserError("Лишняя закрывающая скобка...");
+      stop
+    else (нет)
+      if (current.token_type in _BINARY_TOKENS?) then (да)
+        :raise ParserError("Ожидался операнд...");
+        stop
+      else (нет)
+        if (current.token_type == TokenType.EOF?) then (да)
+          :raise ParserError("Ожидался операнд...");
+          stop
+        else (нет)
+          :raise ParserError("Мусорный ввод...");
+          stop
+        endif
+      endif
+    endif
+  endif
+endif
+@enduml
