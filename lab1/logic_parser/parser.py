@@ -50,6 +50,15 @@ class Parser:
         if current.token_type != TokenType.EOF:
             raise self._unexpected_after_expression(current)
 
+        if (
+            isinstance(expression, BinaryExpression)
+            and not self._is_wrapped_by_outer_parentheses()
+        ):
+            raise ParserError(
+                "Составное выражение с бинарным оператором должно быть "
+                "заключено во внешние скобки."
+            )
+
         return expression
 
     def _parse_equivalence(self) -> Expression:
@@ -213,6 +222,25 @@ class Parser:
         """Возвращает токен, который был успешно прочитан последним."""
 
         return self._tokens[self._index - 1]
+
+    def _is_wrapped_by_outer_parentheses(self) -> bool:
+        """Проверяет, покрывает ли внешняя пара скобок всю формулу."""
+
+        tokens = self._tokens[:-1]
+        if not tokens or tokens[0].token_type != TokenType.LPAREN:
+            return False
+
+        depth = 0
+        last_index = len(tokens) - 1
+        for index, token in enumerate(tokens):
+            if token.token_type == TokenType.LPAREN:
+                depth += 1
+            elif token.token_type == TokenType.RPAREN:
+                depth -= 1
+                if depth == 0:
+                    return index == last_index
+
+        return False
 
 
 def parse_formula(text: str) -> Expression:

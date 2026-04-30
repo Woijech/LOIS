@@ -49,7 +49,7 @@ class ParserTests(unittest.TestCase):
         )
 
     def test_parse_conjunction_before_disjunction(self) -> None:
-        tree = parse_formula("A \\/ B /\\ C")
+        tree = parse_formula("(A \\/ B /\\ C)")
         self.assertEqual(
             tree,
             BinaryExpression(
@@ -60,7 +60,7 @@ class ParserTests(unittest.TestCase):
         )
 
     def test_parse_parentheses_override_precedence(self) -> None:
-        tree = parse_formula("(A \\/ B) /\\ C")
+        tree = parse_formula("((A \\/ B) /\\ C)")
         self.assertEqual(
             tree,
             BinaryExpression(
@@ -71,7 +71,7 @@ class ParserTests(unittest.TestCase):
         )
 
     def test_implication_is_right_associative(self) -> None:
-        tree = parse_formula("A -> B -> C")
+        tree = parse_formula("(A -> B -> C)")
         self.assertEqual(
             tree,
             BinaryExpression(
@@ -82,7 +82,7 @@ class ParserTests(unittest.TestCase):
         )
 
     def test_equivalence_is_left_associative(self) -> None:
-        tree = parse_formula("A ~ B ~ C")
+        tree = parse_formula("(A ~ B ~ C)")
         self.assertEqual(
             tree,
             BinaryExpression(
@@ -93,7 +93,7 @@ class ParserTests(unittest.TestCase):
         )
 
     def test_complex_expression(self) -> None:
-        tree = parse_formula("!(A /\\ B) -> C ~ D")
+        tree = parse_formula("(!(A /\\ B) -> C ~ D)")
         self.assertEqual(
             tree,
             BinaryExpression(
@@ -165,6 +165,20 @@ class ParserTests(unittest.TestCase):
         with self.assertRaisesRegex(ParserError, "Ожидался операнд"):
             parse_formula("A ->")
 
+    def test_binary_expression_requires_outer_parentheses(self) -> None:
+        with self.assertRaisesRegex(ParserError, "внешние скобки"):
+            parse_formula("A /\\ B")
+
+    def test_user_formula_without_outer_parentheses_raises_error(self) -> None:
+        formula = "!(!(!0 /\\ 1) \\/ (!!1 /\\ !0)) ~ (0 \\/ !1)"
+        with self.assertRaisesRegex(ParserError, "внешние скобки"):
+            parse_formula(formula)
+
+    def test_user_formula_with_outer_parentheses_is_valid(self) -> None:
+        formula = "(!(!(!0 /\\ 1) \\/ (!!1 /\\ !0)) ~ (0 \\/ !1))"
+        tree = parse_formula(formula)
+        self.assertIsInstance(tree, BinaryExpression)
+
     def test_missing_operator_between_identifiers_raises_error(self) -> None:
         with self.assertRaisesRegex(ParserError, "пропущен оператор"):
             parse_formula("A B")
@@ -178,7 +192,7 @@ class ParserTests(unittest.TestCase):
             parse_formula("A #")
 
     def test_identifier_can_contain_underscore(self) -> None:
-        tree = parse_formula("VAR_2 /\\ X1")
+        tree = parse_formula("(VAR_2 /\\ X1)")
         self.assertEqual(
             tree,
             BinaryExpression("/\\", Identifier("VAR_2"), Identifier("X1")),
