@@ -1,0 +1,268 @@
+<?xml version='1.0' encoding='utf-8'?>
+<graphml xmlns:y="http://www.yworks.com/xml/graphml" xmlns="http://graphml.graphdrawing.org/xmlns">
+  <key id="d0" for="node" yfiles.type="nodegraphics" />
+  <key id="d1" for="edge" yfiles.type="edgegraphics" />
+  <graph id="literal_variable_name_sknf" edgedefault="directed">
+    <node id="n0">
+      <data key="d0">
+        <y:ShapeNode>
+          <y:Geometry x="425.01" y="32.00" width="77.81" height="36.61" />
+          <y:Fill color="#FFFFFF" transparent="false" />
+          <y:BorderStyle color="#000000" type="line" width="1.2" />
+          <y:NodeLabel alignment="center" fontFamily="Times New Roman" fontSize="12" textColor="#000000">Начало</y:NodeLabel>
+          <y:Shape type="ellipse" />
+        </y:ShapeNode>
+      </data>
+    </node>
+    <node id="n1">
+      <data key="d0">
+        <y:ShapeNode>
+          <y:Geometry x="355.65" y="105.62" width="216.54" height="51.78" />
+          <y:Fill color="#FFFFFF" transparent="false" />
+          <y:BorderStyle color="#000000" type="line" width="1.2" />
+          <y:NodeLabel alignment="center" fontFamily="Times New Roman" fontSize="12" textColor="#000000">node - Identifier?</y:NodeLabel>
+          <y:Shape type="diamond" />
+        </y:ShapeNode>
+      </data>
+    </node>
+    <node id="n2">
+      <data key="d0">
+        <y:ShapeNode>
+          <y:Geometry x="563.01" y="313.43" width="261.82" height="51.78" />
+          <y:Fill color="#FFFFFF" transparent="false" />
+          <y:BorderStyle color="#000000" type="line" width="1.2" />
+          <y:NodeLabel alignment="center" fontFamily="Times New Roman" fontSize="12" textColor="#000000">Возврат node.name</y:NodeLabel>
+          <y:Shape type="parallelogram" />
+        </y:ShapeNode>
+      </data>
+    </node>
+    <node id="n3">
+      <data key="d0">
+        <y:ShapeNode>
+          <y:Geometry x="129.40" y="209.15" width="293.04" height="86.28" />
+          <y:Fill color="#FFFFFF" transparent="false" />
+          <y:BorderStyle color="#000000" type="line" width="1.2" />
+          <y:NodeLabel alignment="center" fontFamily="Times New Roman" fontSize="12" textColor="#000000">node - UnaryExpression
+и operator == '!'?</y:NodeLabel>
+          <y:Shape type="diamond" />
+        </y:ShapeNode>
+      </data>
+    </node>
+    <node id="n4">
+      <data key="d0">
+        <y:ShapeNode>
+          <y:Geometry x="264.65" y="383.21" width="318.54" height="51.78" />
+          <y:Fill color="#FFFFFF" transparent="false" />
+          <y:BorderStyle color="#000000" type="line" width="1.2" />
+          <y:NodeLabel alignment="center" fontFamily="Times New Roman" fontSize="12" textColor="#000000">node.operand - Identifier?</y:NodeLabel>
+          <y:Shape type="diamond" />
+        </y:ShapeNode>
+      </data>
+    </node>
+    <node id="n5">
+      <data key="d0">
+        <y:ShapeNode>
+          <y:Geometry x="398.14" y="522.77" width="367.57" height="51.78" />
+          <y:Fill color="#FFFFFF" transparent="false" />
+          <y:BorderStyle color="#000000" type="line" width="1.2" />
+          <y:NodeLabel alignment="center" fontFamily="Times New Roman" fontSize="12" textColor="#000000">Возврат node.operand.name</y:NodeLabel>
+          <y:Shape type="parallelogram" />
+        </y:ShapeNode>
+      </data>
+    </node>
+    <node id="n6">
+      <data key="d0">
+        <y:ShapeNode>
+          <y:Geometry x="174.00" y="522.77" width="191.84" height="51.78" />
+          <y:Fill color="#FFFFFF" transparent="false" />
+          <y:BorderStyle color="#000000" type="line" width="1.2" />
+          <y:NodeLabel alignment="center" fontFamily="Times New Roman" fontSize="12" textColor="#000000">Возврат None</y:NodeLabel>
+          <y:Shape type="parallelogram" />
+        </y:ShapeNode>
+      </data>
+    </node>
+    <node id="n7">
+      <data key="d0">
+        <y:ShapeNode>
+          <y:Geometry x="32.00" y="452.99" width="191.84" height="51.78" />
+          <y:Fill color="#FFFFFF" transparent="false" />
+          <y:BorderStyle color="#000000" type="line" width="1.2" />
+          <y:NodeLabel alignment="center" fontFamily="Times New Roman" fontSize="12" textColor="#000000">Возврат None</y:NodeLabel>
+          <y:Shape type="parallelogram" />
+        </y:ShapeNode>
+      </data>
+    </node>
+    <node id="n8">
+      <data key="d0">
+        <y:ShapeNode>
+          <y:Geometry x="367.79" y="611.55" width="68.26" height="36.61" />
+          <y:Fill color="#FFFFFF" transparent="false" />
+          <y:BorderStyle color="#000000" type="line" width="1.2" />
+          <y:NodeLabel alignment="center" fontFamily="Times New Roman" fontSize="12" textColor="#000000">Конец</y:NodeLabel>
+          <y:Shape type="ellipse" />
+        </y:ShapeNode>
+      </data>
+    </node>
+    <edge id="e0" source="n0" target="n1">
+      <data key="d1">
+        <y:PolyLineEdge>
+          <y:LineStyle color="#000000" type="line" width="1.1" />
+          <y:Arrows source="none" target="standard" />
+          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
+            <y:Point x="463.92" y="77.05" />
+            <y:Point x="463.92" y="87.05" />
+          </y:Path>
+          <y:BendStyle smoothed="false" />
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e1" source="n1" target="n2">
+      <data key="d1">
+        <y:PolyLineEdge>
+          <y:LineStyle color="#000000" type="line" width="1.1" />
+          <y:Arrows source="none" target="standard" />
+          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
+            <y:Point x="575.33" y="131.51" />
+            <y:Point x="641.62" y="247.12" />
+          </y:Path>
+          <y:EdgeLabel fontFamily="Times New Roman" fontSize="11" textColor="#000000">да</y:EdgeLabel>
+          <y:BendStyle smoothed="false" />
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e2" source="n2" target="n8">
+      <data key="d1">
+        <y:PolyLineEdge>
+          <y:LineStyle color="#000000" type="line" width="1.1" />
+          <y:Arrows source="none" target="standard" />
+          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
+            <y:Point x="730.34" y="415.82" />
+            <y:Point x="781.92" y="522.77" />
+            <y:Point x="781.92" y="522.77" />
+            <y:Point x="781.92" y="522.77" />
+            <y:Point x="781.92" y="574.55" />
+            <y:Point x="781.92" y="574.55" />
+            <y:Point x="781.92" y="574.55" />
+            <y:Point x="541.55" y="608.90" />
+          </y:Path>
+          <y:BendStyle smoothed="false" />
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e3" source="n1" target="n3">
+      <data key="d1">
+        <y:PolyLineEdge>
+          <y:LineStyle color="#000000" type="line" width="1.1" />
+          <y:Arrows source="none" target="standard" />
+          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
+            <y:Point x="352.52" y="131.51" />
+            <y:Point x="325.28" y="174.09" />
+          </y:Path>
+          <y:EdgeLabel fontFamily="Times New Roman" fontSize="11" textColor="#000000">нет</y:EdgeLabel>
+          <y:BendStyle smoothed="false" />
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e4" source="n3" target="n4">
+      <data key="d1">
+        <y:PolyLineEdge>
+          <y:LineStyle color="#000000" type="line" width="1.1" />
+          <y:Arrows source="none" target="standard" />
+          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
+            <y:Point x="425.19" y="252.29" />
+            <y:Point x="424.57" y="328.83" />
+          </y:Path>
+          <y:EdgeLabel fontFamily="Times New Roman" fontSize="11" textColor="#000000">да</y:EdgeLabel>
+          <y:BendStyle smoothed="false" />
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e5" source="n4" target="n5">
+      <data key="d1">
+        <y:PolyLineEdge>
+          <y:LineStyle color="#000000" type="line" width="1.1" />
+          <y:Arrows source="none" target="standard" />
+          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
+            <y:Point x="586.92" y="409.10" />
+            <y:Point x="584.62" y="472.92" />
+          </y:Path>
+          <y:EdgeLabel fontFamily="Times New Roman" fontSize="11" textColor="#000000">да</y:EdgeLabel>
+          <y:BendStyle smoothed="false" />
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e6" source="n5" target="n8">
+      <data key="d1">
+        <y:PolyLineEdge>
+          <y:LineStyle color="#000000" type="line" width="1.1" />
+          <y:Arrows source="none" target="standard" />
+          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
+            <y:Point x="495.14" y="587.84" />
+            <y:Point x="460.46" y="603.09" />
+          </y:Path>
+          <y:BendStyle smoothed="false" />
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e7" source="n4" target="n6">
+      <data key="d1">
+        <y:PolyLineEdge>
+          <y:LineStyle color="#000000" type="line" width="1.1" />
+          <y:Arrows source="none" target="standard" />
+          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
+            <y:Point x="260.92" y="409.10" />
+            <y:Point x="261.92" y="434.99" />
+            <y:Point x="261.92" y="434.99" />
+            <y:Point x="261.92" y="434.99" />
+            <y:Point x="265.16" y="480.63" />
+          </y:Path>
+          <y:EdgeLabel fontFamily="Times New Roman" fontSize="11" textColor="#000000">нет</y:EdgeLabel>
+          <y:BendStyle smoothed="false" />
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e8" source="n6" target="n8">
+      <data key="d1">
+        <y:PolyLineEdge>
+          <y:LineStyle color="#000000" type="line" width="1.1" />
+          <y:Arrows source="none" target="standard" />
+          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
+            <y:Point x="331.72" y="586.74" />
+            <y:Point x="354.67" y="600.50" />
+          </y:Path>
+          <y:BendStyle smoothed="false" />
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e9" source="n3" target="n7">
+      <data key="d1">
+        <y:PolyLineEdge>
+          <y:LineStyle color="#000000" type="line" width="1.1" />
+          <y:Arrows source="none" target="standard" />
+          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
+            <y:Point x="126.65" y="252.29" />
+            <y:Point x="127.38" y="381.68" />
+          </y:Path>
+          <y:EdgeLabel fontFamily="Times New Roman" fontSize="11" textColor="#000000">нет</y:EdgeLabel>
+          <y:BendStyle smoothed="false" />
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e10" source="n7" target="n8">
+      <data key="d1">
+        <y:PolyLineEdge>
+          <y:LineStyle color="#000000" type="line" width="1.1" />
+          <y:Arrows source="none" target="standard" />
+          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
+            <y:Point x="144.85" y="533.29" />
+            <y:Point x="157.92" y="574.55" />
+            <y:Point x="157.92" y="574.55" />
+            <y:Point x="157.92" y="574.55" />
+            <y:Point x="294.07" y="604.85" />
+          </y:Path>
+          <y:BendStyle smoothed="false" />
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+  </graph>
+</graphml>
