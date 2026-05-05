@@ -1,20 +1,39 @@
-@startuml
-skinparam conditionEndStyle hline
-start
+@startdot parse_unary_Parser
+digraph G {
+  graph [rankdir=TB, bgcolor=white, nodesep=0.45, ranksep=0.5];
+  node [
+    fontname="Times New Roman",
+    fontsize=12,
+    color=black,
+    penwidth=1.2,
+    style=solid,
+    margin="0.08,0.06"
+  ];
+  edge [
+    fontname="Times New Roman",
+    fontsize=11,
+    color=black,
+    penwidth=1.1,
+    arrowsize=0.7
+  ];
+start [label="Начало", shape=oval];
+  d1 [label="self._match(TokenType.NOT)?", shape=diamond];
+  p1 [label="operator = self._previous()", shape=box];
+  p2 [label="upcoming = self._current()", shape=box];
+  d2 [label="upcoming - бинарный оператор,\n')' или EOF?", shape=diamond];
+  err [label="Ошибка ParserError:\nнекорректное отрицание", shape=parallelogram];
+  ret_unary [label="Возврат UnaryExpression(\noperator.value, self._parse_unary())", shape=parallelogram];
+  ret_primary [label="Возврат self._parse_primary()", shape=parallelogram];
+  stop [label="Конец", shape=oval];
 
-if (self._match(TokenType.NOT)?) then (да)
-  :operator = self._previous();
-  :upcoming = self._current();
-
-  if (upcoming.token_type in _BINARY_TOKENS\nor upcoming.token_type == TokenType.RPAREN\nor upcoming.token_type == TokenType.EOF?) then (да)
-    :raise ParserError("Унарный оператор '!' ...");
-    stop
-  else (нет)
-    :return UnaryExpression(operator.value, self._parse_unary());
-    stop
-  endif
-else (нет)
-  :return self._parse_primary();
-  stop
-endif
-@enduml
+  start -> d1;
+  d1:e -> p1 [label="да"];
+  p1 -> p2 -> d2;
+  d2:e -> err [label="да"];
+  err -> stop;
+  d2:w -> ret_unary [label="нет"];
+  ret_unary -> stop;
+  d1:w -> ret_primary [label="нет"];
+  ret_primary -> stop;
+}
+@enddot

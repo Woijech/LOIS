@@ -1,4 +1,4 @@
-@startdot collect_conjunction_terms_sknf
+@startdot _parser_init
 digraph G {
   graph [rankdir=TB, bgcolor=white, nodesep=0.45, ranksep=0.5];
   node [
@@ -17,15 +17,10 @@ digraph G {
     arrowsize=0.7
   ];
 start [label="Начало", shape=oval];
-  d1 [label="node - BinaryExpression\nи operator == '/\\'?", shape=diamond];
-  ret_rec [label="Возврат collect(left)\n+ collect(right)", shape=parallelogram];
-  ret_node [label="Возврат [node]", shape=parallelogram];
+  p1 [label="self._tokens = Lexer(text).tokenize()", shape=box];
+  p2 [label="self._index = 0", shape=box];
   stop [label="Конец", shape=oval];
 
-  start -> d1;
-  d1:e -> ret_rec [label="да"];
-  ret_rec -> stop;
-  d1:w -> ret_node [label="нет"];
-  ret_node -> stop;
+  start -> p1 -> p2 -> stop;
 }
 @enddot

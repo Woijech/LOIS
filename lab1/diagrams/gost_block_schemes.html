@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <title>Основные схемы функций программы</title>
+  <style>
+    @page { size: A4; margin: 2cm 1.5cm 2cm 2cm; }
+    body { font-family: "Times New Roman", serif; font-size: 14pt; line-height: 1.2; }
+    h1, h2 { text-align: center; font-size: 16pt; margin: 0 0 18pt; }
+    figure { text-align: center; margin: 0 0 18pt; page-break-inside: avoid; }
+    img { max-width: 17cm; max-height: 23cm; width: auto; height: auto; }
+    figcaption { font-size: 12pt; margin-top: 6pt; }
+    li { margin-bottom: 6pt; }
+  </style>
+</head>
+<body>
+  <h1>Основные схемы функций программы</h1>
+  <figure>
+  <img src="png/tokenize_Lexer.png" alt="Рис. 1. Метод tokenize класса Lexer">
+  <figcaption>Рис. 1. Метод tokenize класса Lexer</figcaption>
+</figure><figure>
+  <img src="png/read_operator_Lexer.png" alt="Рис. 2. Метод _read_operator класса Lexer">
+  <figcaption>Рис. 2. Метод _read_operator класса Lexer</figcaption>
+</figure><figure>
+  <img src="png/read_identifier_Lexer.png" alt="Рис. 3. Метод _read_identifier класса Lexer">
+  <figcaption>Рис. 3. Метод _read_identifier класса Lexer</figcaption>
+</figure><figure>
+  <img src="png/parse_Parser.png" alt="Рис. 4. Метод parse класса Parser">
+  <figcaption>Рис. 4. Метод parse класса Parser</figcaption>
+</figure><figure>
+  <img src="png/parse_equivalence_Parser.png" alt="Рис. 5. Метод _parse_equivalence класса Parser">
+  <figcaption>Рис. 5. Метод _parse_equivalence класса Parser</figcaption>
+</figure><figure>
+  <img src="png/parse_implication_Parser.png" alt="Рис. 6. Метод _parse_implication класса Parser">
+  <figcaption>Рис. 6. Метод _parse_implication класса Parser</figcaption>
+</figure><figure>
+  <img src="png/parse_disjunction_Parser.png" alt="Рис. 7. Метод _parse_disjunction класса Parser">
+  <figcaption>Рис. 7. Метод _parse_disjunction класса Parser</figcaption>
+</figure><figure>
+  <img src="png/parse_conjunction_Parser.png" alt="Рис. 8. Метод _parse_conjunction класса Parser">
+  <figcaption>Рис. 8. Метод _parse_conjunction класса Parser</figcaption>
+</figure><figure>
+  <img src="png/parse_unary_Parser.png" alt="Рис. 9. Метод _parse_unary класса Parser">
+  <figcaption>Рис. 9. Метод _parse_unary класса Parser</figcaption>
+</figure><figure>
+  <img src="png/parse_primary_Parser.png" alt="Рис. 10. Метод _parse_primary класса Parser">
+  <figcaption>Рис. 10. Метод _parse_primary класса Parser</figcaption>
+</figure><figure>
+  <img src="png/is_sknf_sknf.png" alt="Рис. 11. Функция is_sknf">
+  <figcaption>Рис. 11. Функция is_sknf</figcaption>
+</figure><figure>
+  <img src="png/collect_conjunction_terms_sknf.png" alt="Рис. 12. Функция _collect_conjunction_terms">
+  <figcaption>Рис. 12. Функция _collect_conjunction_terms</figcaption>
+</figure><figure>
+  <img src="png/collect_disjunction_terms_sknf.png" alt="Рис. 13. Функция _collect_disjunction_terms">
+  <figcaption>Рис. 13. Функция _collect_disjunction_terms</figcaption>
+</figure><figure>
+  <img src="png/extract_clause_variables_sknf.png" alt="Рис. 14. Функция _extract_clause_variables">
+  <figcaption>Рис. 14. Функция _extract_clause_variables</figcaption>
+</figure><figure>
+  <img src="png/literal_variable_name_sknf.png" alt="Рис. 15. Функция _literal_variable_name">
+  <figcaption>Рис. 15. Функция _literal_variable_name</figcaption>
+</figure>
+  <h2>Неосновные функции и элементы</h2>
+  <ul><li>_class_diagram.puml / _class_diagram.png - диаграмма структуры классов, не алгоритм функции</li><li>_lexer_init.puml / _lexer_init.png - конструктор Lexer, только инициализирует поля объекта</li><li>_parser_init.puml / _parser_init.png - конструктор Parser, только создает список токенов и индекс</li><li>_parser_unexpected_after_expression.puml / _unexpected_after_expression_Parser.png - формирует текст ошибки</li><li>_parser_match.puml / _match_Parser.png - служебное перемещение по токенам</li><li>_parser_current.puml / _current_Parser.png - служебный доступ к текущему токену</li><li>_parser_previous.puml / _previous_Parser.png - служебный доступ к предыдущему токену</li><li>_parse_formula.puml / _parse_formula_parser.png - функция-обертка над Parser(text).parse()</li><li>_run_main.puml / _run_main.png - пользовательский интерфейс и вызов других функций</li></ul>
+</body>
+</html>

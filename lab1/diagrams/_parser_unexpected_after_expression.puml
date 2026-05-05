@@ -1,0 +1,36 @@
+@startdot _unexpected_after_expression_Parser
+digraph G {
+  graph [rankdir=TB, bgcolor=white, nodesep=0.45, ranksep=0.5];
+  node [
+    fontname="Times New Roman",
+    fontsize=12,
+    color=black,
+    penwidth=1.2,
+    style=solid,
+    margin="0.08,0.06"
+  ];
+  edge [
+    fontname="Times New Roman",
+    fontsize=11,
+    color=black,
+    penwidth=1.1,
+    arrowsize=0.7
+  ];
+start [label="Начало", shape=oval];
+  d1 [label="token.token_type в\n{IDENTIFIER, CONSTANT,\nLPAREN, NOT}?", shape=diamond];
+  ret_missing [label="Возврат ParserError:\nпропущен оператор", shape=parallelogram];
+  d2 [label="token.token_type == RPAREN?", shape=diamond];
+  ret_rparen [label="Возврат ParserError:\nлишняя закрывающая скобка", shape=parallelogram];
+  ret_tail [label="Возврат ParserError:\nнекорректный хвост", shape=parallelogram];
+  stop [label="Конец", shape=oval];
+
+  start -> d1;
+  d1:e -> ret_missing [label="да"];
+  ret_missing -> stop;
+  d1:w -> d2 [label="нет"];
+  d2:e -> ret_rparen [label="да"];
+  ret_rparen -> stop;
+  d2:w -> ret_tail [label="нет"];
+  ret_tail -> stop;
+}
+@enddot

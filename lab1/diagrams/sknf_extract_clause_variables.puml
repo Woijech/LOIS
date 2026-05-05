@@ -1,21 +1,40 @@
-@startuml
-skinparam conditionEndStyle hline
-start
+@startdot extract_clause_variables_sknf
+digraph G {
+  graph [rankdir=TB, bgcolor=white, nodesep=0.45, ranksep=0.5];
+  node [
+    fontname="Times New Roman",
+    fontsize=12,
+    color=black,
+    penwidth=1.2,
+    style=solid,
+    margin="0.08,0.06"
+  ];
+  edge [
+    fontname="Times New Roman",
+    fontsize=11,
+    color=black,
+    penwidth=1.1,
+    arrowsize=0.7
+  ];
+start [label="Начало", shape=oval];
+  p1 [label="literals = _collect_disjunction_terms(node)", shape=box];
+  p2 [label="variables = set()", shape=box];
+  d_loop [label="есть следующий literal?", shape=diamond];
+  p3 [label="variable_name = _literal_variable_name(literal)", shape=box];
+  d_bad [label="variable_name is None\nили уже есть в variables?", shape=diamond];
+  ret_none [label="Возврат None", shape=parallelogram];
+  p_add [label="variables.add(variable_name)", shape=box];
+  ret_vars [label="Возврат variables", shape=parallelogram];
+  stop [label="Конец", shape=oval];
 
-:literals = _collect_disjunction_terms(node);
-:variables = set();
-
-while (есть следующий literal?) is (да)
-  :variable_name = _literal_variable_name(literal);
-
-  if (variable_name is None\nor variable_name in variables?) then (да)
-    :return None;
-    stop
-  else (нет)
-    :variables.add(variable_name);
-  endif
-endwhile (нет)
-
-:return variables;
-stop
-@enduml
+  start -> p1 -> p2 -> d_loop;
+  d_loop:e -> p3 [label="да"];
+  p3 -> d_bad;
+  d_bad:e -> ret_none [label="да"];
+  ret_none -> stop;
+  d_bad:w -> p_add [label="нет"];
+  p_add -> d_loop;
+  d_loop:w -> ret_vars [label="нет"];
+  ret_vars -> stop;
+}
+@enddot

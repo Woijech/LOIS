@@ -1,14 +1,34 @@
-@startuml
-start
+@startdot parse_conjunction_Parser
+digraph G {
+  graph [rankdir=TB, bgcolor=white, nodesep=0.45, ranksep=0.5];
+  node [
+    fontname="Times New Roman",
+    fontsize=12,
+    color=black,
+    penwidth=1.2,
+    style=solid,
+    margin="0.08,0.06"
+  ];
+  edge [
+    fontname="Times New Roman",
+    fontsize=11,
+    color=black,
+    penwidth=1.1,
+    arrowsize=0.7
+  ];
+start [label="Начало", shape=oval];
+  p1 [label="expression = self._parse_unary()", shape=box];
+  d1 [label="self._match(TokenType.AND)?", shape=diamond];
+  p2 [label="operator = self._previous()", shape=box];
+  p3 [label="right = self._parse_unary()", shape=box];
+  p4 [label="expression = BinaryExpression(\noperator.value, expression, right)", shape=box];
+  ret [label="Возврат expression", shape=parallelogram];
+  stop [label="Конец", shape=oval];
 
-:expression = self._parse_unary();
-
-while (self._match(TokenType.AND)?) is (да)
-  :operator = self._previous();
-  :right = self._parse_unary();
-  :expression = BinaryExpression(operator.value, expression, right);
-endwhile (нет)
-
-:return expression;
-stop
-@enduml
+  start -> p1 -> d1;
+  d1:e -> p2 [label="да"];
+  p2 -> p3 -> p4 -> d1;
+  d1:w -> ret [label="нет"];
+  ret -> stop;
+}
+@enddot

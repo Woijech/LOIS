@@ -1,4 +1,4 @@
-@startdot collect_conjunction_terms_sknf
+@startdot _match_Parser
 digraph G {
   graph [rankdir=TB, bgcolor=white, nodesep=0.45, ranksep=0.5];
   node [
@@ -17,15 +17,17 @@ digraph G {
     arrowsize=0.7
   ];
 start [label="Начало", shape=oval];
-  d1 [label="node - BinaryExpression\nи operator == '/\\'?", shape=diamond];
-  ret_rec [label="Возврат collect(left)\n+ collect(right)", shape=parallelogram];
-  ret_node [label="Возврат [node]", shape=parallelogram];
+  d1 [label="self._current().token_type
+== token_type?", shape=diamond];
+  p1 [label="self._index += 1", shape=box];
+  ret_true [label="Возврат True", shape=parallelogram];
+  ret_false [label="Возврат False", shape=parallelogram];
   stop [label="Конец", shape=oval];
 
   start -> d1;
-  d1:e -> ret_rec [label="да"];
-  ret_rec -> stop;
-  d1:w -> ret_node [label="нет"];
-  ret_node -> stop;
+  d1:e -> p1 [label="да"];
+  p1 -> ret_true -> stop;
+  d1:w -> ret_false [label="нет"];
+  ret_false -> stop;
 }
 @enddot

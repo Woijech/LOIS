@@ -1,18 +1,38 @@
-@startuml
-skinparam conditionEndStyle hline
-start
+@startdot read_identifier_Lexer
+digraph G {
+  graph [rankdir=TB, bgcolor=white, nodesep=0.45, ranksep=0.5];
+  node [
+    fontname="Times New Roman",
+    fontsize=12,
+    color=black,
+    penwidth=1.2,
+    style=solid,
+    margin="0.08,0.06"
+  ];
+  edge [
+    fontname="Times New Roman",
+    fontsize=11,
+    color=black,
+    penwidth=1.1,
+    arrowsize=0.7
+  ];
+start [label="Начало", shape=oval];
+  p1 [label="start = self._position", shape=box];
+  p2 [label="self._position += 1", shape=box];
+  d1 [label="self._position < self._length?", shape=diamond];
+  p3 [label="current = self._text[self._position]", shape=box];
+  d2 [label="current.isalnum()\nили current == '_'?", shape=diamond];
+  p4 [label="self._position += 1", shape=box];
+  ret [label="Возврат Token(IDENTIFIER,\ntext[start:self._position], start)", shape=parallelogram];
+  stop [label="Конец", shape=oval];
 
-:start = self._position;
-:self._position += 1;
-
-while (self._position < self._length?) is (да)
-  :current = self._text[self._position];
-
-  if (current.isalnum() or current == "_"?) then (да)
-    :self._position += 1;
-  endif
-endwhile (нет)
-
-:return Token(TokenType.IDENTIFIER,\nself._text[start:self._position], start);
-stop
-@enduml
+  start -> p1 -> p2 -> d1;
+  d1:e -> p3 [label="да"];
+  p3 -> d2;
+  d2:e -> p4 [label="да"];
+  p4 -> d1;
+  d2:w -> ret [label="нет"];
+  d1:w -> ret [label="нет"];
+  ret -> stop;
+}
+@enddot

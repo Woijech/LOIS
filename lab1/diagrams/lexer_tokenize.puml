@@ -1,36 +1,73 @@
-@startuml
-skinparam conditionEndStyle hline
-start
+@startdot tokenize_Lexer
+digraph G {
+  graph [rankdir=TB, bgcolor=white, nodesep=0.45, ranksep=0.5];
+  node [
+    fontname="Times New Roman",
+    fontsize=12,
+    color=black,
+    penwidth=1.2,
+    style=solid,
+    margin="0.08,0.06"
+  ];
+  edge [
+    fontname="Times New Roman",
+    fontsize=11,
+    color=black,
+    penwidth=1.1,
+    arrowsize=0.7
+  ];
+start [label="Начало", shape=oval];
+  d_empty [label="not self._text.strip()?", shape=diamond];
+  err_empty [label="Ошибка LexerError:\nпустая строка", shape=parallelogram];
+  p_tokens [label="tokens = []", shape=box];
+  d_loop [label="self._position < self._length?", shape=diamond];
+  p_current [label="current = self._text[self._position]", shape=box];
+  d_space [label="current.isspace()?", shape=diamond];
+  p_skip [label="self._position += 1", shape=box];
+  p_op [label="operator_token = self._read_operator()", shape=box];
+  d_op [label="operator_token is not None?", shape=diamond];
+  p_add_op [label="tokens.append(operator_token)", shape=box];
+  d_id [label="current.isalpha()?", shape=diamond];
+  p_id [label="tokens.append(self._read_identifier())", shape=box];
+  d_const [label="current in {'0', '1'}?", shape=diamond];
+  p_const [label="Добавить Token(CONSTANT)\nself._position += 1", shape=box];
+  d_and [label="current == '/'?", shape=diamond];
+  err_and [label="Ошибка LexerError:\nоператор должен быть '/\\'", shape=parallelogram];
+  d_or [label="current == '\\\\'?", shape=diamond];
+  err_or [label="Ошибка LexerError:\nоператор должен быть '\\/'", shape=parallelogram];
+  err_bad [label="Ошибка LexerError:\nнедопустимый символ", shape=parallelogram];
+  p_eof [label="tokens.append(Token(EOF,\n'', self._length))", shape=box];
+  ret [label="Возврат tokens", shape=parallelogram];
+  stop [label="Конец", shape=oval];
 
-if (not self._text.strip()?) then (да)
-  :raise LexerError("Пустая строка...");
-  stop
-else (нет)
-  :tokens = [];
-endif
-
-while (self._position < self._length?) is (да)
-  :current = self._text[self._position];
-
-  if (current.isspace()?) then (да)
-    :self._position += 1;
-  else (нет)
-    :operator_token = self._read_operator();
-
-    if (operator_token is not None?) then (да)
-      :tokens.append(operator_token);
-    else (нет)
-      if (current.isalpha()?) then (да)
-        :tokens.append(self._read_identifier());
-      else (нет)
-        :raise LexerError("Недопустимый символ ...");
-        stop
-      endif
-    endif
-  endif
-endwhile (нет)
-
-:tokens.append(Token(TokenType.EOF, "", self._length));
-:return tokens;
-stop
-@enduml
+  start -> d_empty;
+  d_empty:e -> err_empty [label="да"];
+  err_empty -> stop;
+  d_empty:w -> p_tokens [label="нет"];
+  p_tokens -> d_loop;
+  d_loop:e -> p_current [label="да"];
+  p_current -> d_space;
+  d_space:e -> p_skip [label="да"];
+  p_skip -> d_loop;
+  d_space:w -> p_op [label="нет"];
+  p_op -> d_op;
+  d_op:e -> p_add_op [label="да"];
+  p_add_op -> d_loop;
+  d_op:w -> d_id [label="нет"];
+  d_id:e -> p_id [label="да"];
+  p_id -> d_loop;
+  d_id:w -> d_const [label="нет"];
+  d_const:e -> p_const [label="да"];
+  p_const -> d_loop;
+  d_const:w -> d_and [label="нет"];
+  d_and:e -> err_and [label="да"];
+  err_and -> stop;
+  d_and:w -> d_or [label="нет"];
+  d_or:e -> err_or [label="да"];
+  err_or -> stop;
+  d_or:w -> err_bad [label="нет"];
+  err_bad -> stop;
+  d_loop:w -> p_eof [label="нет"];
+  p_eof -> ret -> stop;
+}
+@enddot

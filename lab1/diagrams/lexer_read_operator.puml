@@ -1,20 +1,40 @@
-@startuml
-skinparam conditionEndStyle hline
-start
+@startdot read_operator_Lexer
+digraph G {
+  graph [rankdir=TB, bgcolor=white, nodesep=0.45, ranksep=0.5];
+  node [
+    fontname="Times New Roman",
+    fontsize=12,
+    color=black,
+    penwidth=1.2,
+    style=solid,
+    margin="0.08,0.06"
+  ];
+  edge [
+    fontname="Times New Roman",
+    fontsize=11,
+    color=black,
+    penwidth=1.1,
+    arrowsize=0.7
+  ];
+start [label="Начало", shape=oval];
+  p1 [label="raw = первый оператор\nиз списка", shape=box];
+  d1 [label="raw существует?", shape=diamond];
+  d2 [label="text.startswith(raw,\nself._position)?", shape=diamond];
+  p2 [label="token_type, value = _OPERATORS[raw]", shape=box];
+  p3 [label="token = Token(token_type,\nvalue, self._position)", shape=box];
+  p4 [label="self._position += len(raw)", shape=box];
+  ret1 [label="Возврат token", shape=parallelogram];
+  p5 [label="raw = следующий оператор", shape=box];
+  ret2 [label="Возврат None", shape=parallelogram];
+  stop [label="Конец", shape=oval];
 
-:raw = "->";
-while (есть следующий raw?) is (да)
-  if (self._text.startswith(raw, self._position)?) then (да)
-    :token_type, value = _OPERATORS[raw];
-    :token = Token(token_type, value, self._position);
-    :self._position += len(raw);
-    :return token;
-    stop
-  else (нет)
-    :взять следующий raw;
-  endif
-endwhile (нет)
-
-:return None;
-stop
-@enduml
+  start -> p1 -> d1;
+  d1:e -> d2 [label="да"];
+  d2:e -> p2 [label="да"];
+  p2 -> p3 -> p4 -> ret1 -> stop;
+  d2:w -> p5 [label="нет"];
+  p5 -> d1;
+  d1:w -> ret2 [label="нет"];
+  ret2 -> stop;
+}
+@enddot

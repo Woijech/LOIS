@@ -1,16 +1,34 @@
-@startuml
-skinparam conditionEndStyle hline
-start
+@startdot parse_implication_Parser
+digraph G {
+  graph [rankdir=TB, bgcolor=white, nodesep=0.45, ranksep=0.5];
+  node [
+    fontname="Times New Roman",
+    fontsize=12,
+    color=black,
+    penwidth=1.2,
+    style=solid,
+    margin="0.08,0.06"
+  ];
+  edge [
+    fontname="Times New Roman",
+    fontsize=11,
+    color=black,
+    penwidth=1.1,
+    arrowsize=0.7
+  ];
+start [label="Начало", shape=oval];
+  p1 [label="expression = self._parse_disjunction()", shape=box];
+  d1 [label="self._match(TokenType.IMPLIES)?", shape=diamond];
+  p2 [label="operator = self._previous()", shape=box];
+  p3 [label="right = self._parse_implication()", shape=box];
+  ret_bin [label="Возврат BinaryExpression(\noperator.value, expression, right)", shape=parallelogram];
+  ret_expr [label="Возврат expression", shape=parallelogram];
+  stop [label="Конец", shape=oval];
 
-:expression = self._parse_disjunction();
-
-if (self._match(TokenType.IMPLIES)?) then (да)
-  :operator = self._previous();
-  :right = self._parse_implication();
-  :return BinaryExpression(operator.value, expression, right);
-  stop
-else (нет)
-  :return expression;
-  stop
-endif
-@enduml
+  start -> p1 -> d1;
+  d1:e -> p2 [label="да"];
+  p2 -> p3 -> ret_bin -> stop;
+  d1:w -> ret_expr [label="нет"];
+  ret_expr -> stop;
+}
+@enddot

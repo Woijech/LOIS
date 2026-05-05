@@ -1,42 +1,65 @@
-@startuml
-skinparam conditionEndStyle hline
-start
+@startdot parse_primary_Parser
+digraph G {
+  graph [rankdir=TB, bgcolor=white, nodesep=0.45, ranksep=0.5];
+  node [
+    fontname="Times New Roman",
+    fontsize=12,
+    color=black,
+    penwidth=1.2,
+    style=solid,
+    margin="0.08,0.06"
+  ];
+  edge [
+    fontname="Times New Roman",
+    fontsize=11,
+    color=black,
+    penwidth=1.1,
+    arrowsize=0.7
+  ];
+start [label="Начало", shape=oval];
+  p0 [label="current = self._current()", shape=box];
+  d_id [label="self._match(TokenType.IDENTIFIER)?", shape=diamond];
+  ret_id [label="Возврат Identifier(\nself._previous().value)", shape=parallelogram];
+  d_const [label="self._match(TokenType.CONSTANT)?", shape=diamond];
+  ret_const [label="Возврат BooleanConstant(\nself._previous().value == '1')", shape=parallelogram];
+  d_lparen [label="self._match(TokenType.LPAREN)?", shape=diamond];
+  p_open [label="opening = self._previous()", shape=box];
+  p_expr [label="expression = self._parse_equivalence()", shape=box];
+  d_rparen_match [label="self._match(TokenType.RPAREN)?", shape=diamond];
+  ret_expr [label="Возврат expression", shape=parallelogram];
+  err_missing [label="Ошибка ParserError:\nне найдена закрывающая скобка", shape=parallelogram];
+  d_rparen [label="current.token_type == RPAREN?", shape=diamond];
+  err_extra [label="Ошибка ParserError:\nлишняя закрывающая скобка", shape=parallelogram];
+  d_bin [label="current.token_type\nв _BINARY_TOKENS?", shape=diamond];
+  err_operand [label="Ошибка ParserError:\nожидался операнд", shape=parallelogram];
+  d_eof [label="current.token_type == EOF?", shape=diamond];
+  err_eof [label="Ошибка ParserError:\nвыражение закончилось", shape=parallelogram];
+  err_garbage [label="Ошибка ParserError:\nмусорный ввод", shape=parallelogram];
+  stop [label="Конец", shape=oval];
 
-:current = self._current();
-
-if (self._match(TokenType.IDENTIFIER)?) then (да)
-  :return Identifier(self._previous().value);
-  stop
-else (нет)
-  if (self._match(TokenType.LPAREN)?) then (да)
-    :opening = self._previous();
-    :expression = self._parse_equivalence();
-
-    if (self._match(TokenType.RPAREN)?) then (да)
-      :return expression;
-      stop
-    else (нет)
-      :raise ParserError("Не найдена закрывающая скобка...");
-      stop
-    endif
-  else (нет)
-    if (current.token_type == TokenType.RPAREN?) then (да)
-      :raise ParserError("Лишняя закрывающая скобка...");
-      stop
-    else (нет)
-      if (current.token_type in _BINARY_TOKENS?) then (да)
-        :raise ParserError("Ожидался операнд...");
-        stop
-      else (нет)
-        if (current.token_type == TokenType.EOF?) then (да)
-          :raise ParserError("Ожидался операнд...");
-          stop
-        else (нет)
-          :raise ParserError("Мусорный ввод...");
-          stop
-        endif
-      endif
-    endif
-  endif
-endif
-@enduml
+  start -> p0 -> d_id;
+  d_id:e -> ret_id [label="да"];
+  ret_id -> stop;
+  d_id:w -> d_const [label="нет"];
+  d_const:e -> ret_const [label="да"];
+  ret_const -> stop;
+  d_const:w -> d_lparen [label="нет"];
+  d_lparen:e -> p_open [label="да"];
+  p_open -> p_expr -> d_rparen_match;
+  d_rparen_match:e -> ret_expr [label="да"];
+  ret_expr -> stop;
+  d_rparen_match:w -> err_missing [label="нет"];
+  err_missing -> stop;
+  d_lparen:w -> d_rparen [label="нет"];
+  d_rparen:e -> err_extra [label="да"];
+  err_extra -> stop;
+  d_rparen:w -> d_bin [label="нет"];
+  d_bin:e -> err_operand [label="да"];
+  err_operand -> stop;
+  d_bin:w -> d_eof [label="нет"];
+  d_eof:e -> err_eof [label="да"];
+  err_eof -> stop;
+  d_eof:w -> err_garbage [label="нет"];
+  err_garbage -> stop;
+}
+@enddot

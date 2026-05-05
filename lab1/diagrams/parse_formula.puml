@@ -1,5 +1,0 @@
-@startuml
-start
-:return Parser(text).parse();
-stop
-@enduml

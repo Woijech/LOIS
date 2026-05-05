@@ -1,17 +1,16 @@
-@startuml
+@startuml _class_diagram
 skinparam monochrome true
 skinparam shadowing false
 skinparam classAttributeIconSize 0
 hide circle
 
 class FormulaError
-
 class LexerError
-
 class ParserError
 
 class TokenType {
   IDENTIFIER
+  CONSTANT
   NOT
   AND
   OR
@@ -38,16 +37,16 @@ class Lexer {
 }
 
 abstract class Expression
-
 class Identifier {
   +name: str
 }
-
+class BooleanConstant {
+  +value: bool
+}
 class UnaryExpression {
   +operator: str
   +operand: Expression
 }
-
 class BinaryExpression {
   +operator: str
   +left: Expression
@@ -68,6 +67,7 @@ class Parser {
   -_match(token_type: TokenType): bool
   -_current(): Token
   -_previous(): Token
+  -_is_wrapped_by_outer_parentheses(): bool
 }
 
 FormulaError --|> ValueError
@@ -75,6 +75,7 @@ LexerError --|> FormulaError
 ParserError --|> FormulaError
 
 Identifier --|> Expression
+BooleanConstant --|> Expression
 UnaryExpression --|> Expression
 BinaryExpression --|> Expression
 
@@ -87,6 +88,7 @@ Parser --> Token : использует
 Parser --> TokenType : использует
 Parser ..> ParserError : выбрасывает
 Parser ..> Identifier : создает
+Parser ..> BooleanConstant : создает
 Parser ..> UnaryExpression : создает
 Parser ..> BinaryExpression : создает
 

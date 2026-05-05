@@ -1,28 +1,47 @@
-@startuml
-skinparam conditionEndStyle hline
-start
+@startdot is_sknf_sknf
+digraph G {
+  graph [rankdir=TB, bgcolor=white, nodesep=0.45, ranksep=0.5];
+  node [
+    fontname="Times New Roman",
+    fontsize=12,
+    color=black,
+    penwidth=1.2,
+    style=solid,
+    margin="0.08,0.06"
+  ];
+  edge [
+    fontname="Times New Roman",
+    fontsize=11,
+    color=black,
+    penwidth=1.1,
+    arrowsize=0.7
+  ];
+start [label="Начало", shape=oval];
+  p1 [label="clauses = _collect_conjunction_terms(node)", shape=box];
+  d_empty [label="not clauses?", shape=diamond];
+  ret_false_1 [label="Возврат False", shape=parallelogram];
+  p_sets [label="clause_variable_sets = []", shape=box];
+  d_loop [label="есть следующий clause?", shape=diamond];
+  p_vars [label="variables = _extract_clause_variables(clause)", shape=box];
+  d_bad [label="variables is None?", shape=diamond];
+  ret_false_2 [label="Возврат False", shape=parallelogram];
+  p_add [label="Добавить frozenset(variables)\nв clause_variable_sets", shape=box];
+  p_ref [label="reference_variables =\nclause_variable_sets[0]", shape=box];
+  ret_all [label="Возврат all(variables ==\nreference_variables)", shape=parallelogram];
+  stop [label="Конец", shape=oval];
 
-:clauses = _collect_conjunction_terms(node);
-
-if (not clauses?) then (да)
-  :return False;
-  stop
-else (нет)
-  :clause_variable_sets = [];
-endif
-
-while (есть следующий clause?) is (да)
-  :variables = _extract_clause_variables(clause);
-
-  if (variables is None?) then (да)
-    :return False;
-    stop
-  else (нет)
-    :clause_variable_sets.append(frozenset(variables));
-  endif
-endwhile (нет)
-
-:reference_variables = clause_variable_sets[0];
-:return all(variables == reference_variables\nfor variables in clause_variable_sets);
-stop
-@enduml
+  start -> p1 -> d_empty;
+  d_empty:e -> ret_false_1 [label="да"];
+  ret_false_1 -> stop;
+  d_empty:w -> p_sets [label="нет"];
+  p_sets -> d_loop;
+  d_loop:e -> p_vars [label="да"];
+  p_vars -> d_bad;
+  d_bad:e -> ret_false_2 [label="да"];
+  ret_false_2 -> stop;
+  d_bad:w -> p_add [label="нет"];
+  p_add -> d_loop;
+  d_loop:w -> p_ref [label="нет"];
+  p_ref -> ret_all -> stop;
+}
+@enddot

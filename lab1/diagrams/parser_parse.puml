@@ -1,15 +1,38 @@
-@startuml
-skinparam conditionEndStyle hline
-start
+@startdot parse_Parser
+digraph G {
+  graph [rankdir=TB, bgcolor=white, nodesep=0.45, ranksep=0.5];
+  node [
+    fontname="Times New Roman",
+    fontsize=12,
+    color=black,
+    penwidth=1.2,
+    style=solid,
+    margin="0.08,0.06"
+  ];
+  edge [
+    fontname="Times New Roman",
+    fontsize=11,
+    color=black,
+    penwidth=1.1,
+    arrowsize=0.7
+  ];
+start [label="Начало", shape=oval];
+  p1 [label="expression = self._parse_equivalence()", shape=box];
+  p2 [label="current = self._current()", shape=box];
+  d1 [label="current.token_type\n!= TokenType.EOF?", shape=diamond];
+  err_tail [label="Ошибка ParserError:\nлишний хвост выражения", shape=parallelogram];
+  d2 [label="expression - BinaryExpression\nи нет внешних скобок?", shape=diamond];
+  err_wrap [label="Ошибка ParserError:\nнужны внешние скобки", shape=parallelogram];
+  ret [label="Возврат expression", shape=parallelogram];
+  stop [label="Конец", shape=oval];
 
-:expression = self._parse_equivalence();
-:current = self._current();
-
-if (current.token_type != TokenType.EOF?) then (да)
-  :raise self._unexpected_after_expression(current);
-  stop
-else (нет)
-  :return expression;
-  stop
-endif
-@enduml
+  start -> p1 -> p2 -> d1;
+  d1:e -> err_tail [label="да"];
+  err_tail -> stop;
+  d1:w -> d2 [label="нет"];
+  d2:e -> err_wrap [label="да"];
+  err_wrap -> stop;
+  d2:w -> ret [label="нет"];
+  ret -> stop;
+}
+@enddot

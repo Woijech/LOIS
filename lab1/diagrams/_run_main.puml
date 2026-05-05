@@ -1,0 +1,66 @@
+@startdot _run_main
+digraph G {
+  graph [rankdir=TB, bgcolor=white, nodesep=0.45, ranksep=0.5];
+  node [
+    fontname="Times New Roman",
+    fontsize=12,
+    color=black,
+    penwidth=1.2,
+    style=solid,
+    margin="0.08,0.06"
+  ];
+  edge [
+    fontname="Times New Roman",
+    fontsize=11,
+    color=black,
+    penwidth=1.1,
+    arrowsize=0.7
+  ];
+start [label="Начало", shape=oval];
+  p0 [label="Вывести заголовок программы", shape=parallelogram];
+  p_menu [label="Вывести меню", shape=parallelogram];
+  p_choice [label="choice = input(...).strip().lower()", shape=parallelogram];
+  d_exit [label="choice в {'0', 'exit', ''}?", shape=diamond];
+  out_exit [label="Вывести 'Завершение работы.'", shape=parallelogram];
+  d_manual [label="choice == '1'?", shape=diamond];
+  in_formula [label="raw_formula = input(...).strip()", shape=parallelogram];
+  d_empty_formula [label="raw_formula пустая?", shape=diamond];
+  err_empty_formula [label="Вывести ошибку:\nформула не введена", shape=parallelogram];
+  call_manual [label="print_sknf_result(raw_formula)", shape=box];
+  d_file [label="choice == '2'?", shape=diamond];
+  in_path [label="file_path = input(...).strip()", shape=parallelogram];
+  d_empty_path [label="file_path пустой?", shape=diamond];
+  err_empty_path [label="Вывести ошибку:\nпуть не введен", shape=parallelogram];
+  p_load [label="raw_formula = load_formula_from_file(file_path)", shape=box];
+  d_read_error [label="ошибка чтения\nили пустой файл?", shape=diamond];
+  err_read [label="Вывести ошибку", shape=parallelogram];
+  out_formula [label="Вывести формулу", shape=parallelogram];
+  call_file [label="print_sknf_result(raw_formula)", shape=box];
+  err_choice [label="Вывести ошибку:\nвыберите 1, 2 или 0", shape=parallelogram];
+  stop [label="Конец", shape=oval];
+
+  start -> p0 -> p_menu -> p_choice -> d_exit;
+  d_exit:e -> out_exit [label="да"];
+  out_exit -> stop;
+  d_exit:w -> d_manual [label="нет"];
+  d_manual:e -> in_formula [label="да"];
+  in_formula -> d_empty_formula;
+  d_empty_formula:e -> err_empty_formula [label="да"];
+  err_empty_formula -> p_menu;
+  d_empty_formula:w -> call_manual [label="нет"];
+  call_manual -> p_menu;
+  d_manual:w -> d_file [label="нет"];
+  d_file:e -> in_path [label="да"];
+  in_path -> d_empty_path;
+  d_empty_path:e -> err_empty_path [label="да"];
+  err_empty_path -> p_menu;
+  d_empty_path:w -> p_load [label="нет"];
+  p_load -> d_read_error;
+  d_read_error:e -> err_read [label="да"];
+  err_read -> p_menu;
+  d_read_error:w -> out_formula [label="нет"];
+  out_formula -> call_file -> p_menu;
+  d_file:w -> err_choice [label="нет"];
+  err_choice -> p_menu;
+}
+@enddot

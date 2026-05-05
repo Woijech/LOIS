@@ -1,6 +1,0 @@
-@startuml
-start
-:self._tokens = Lexer(text).tokenize();
-:self._index = 0;
-stop
-@enduml

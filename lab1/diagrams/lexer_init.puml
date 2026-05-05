@@ -1,7 +1,0 @@
-@startuml
-start
-:self._text = text;
-:self._length = len(text);
-:self._position = 0;
-stop
-@enduml
