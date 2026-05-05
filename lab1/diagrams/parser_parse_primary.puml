@@ -1,6 +1,6 @@
 @startdot parse_primary_Parser
 digraph G {
-  graph [rankdir=TB, bgcolor=white, nodesep=0.45, ranksep=0.5];
+  graph [rankdir=TB, bgcolor=white, splines=polyline, nodesep=0.45, ranksep=0.5];
   node [
     fontname="Times New Roman",
     fontsize=12,
